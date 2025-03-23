@@ -1,12 +1,14 @@
 <template>
+  <NavBar />
   <main>
-    <PlotGenerator />
+    <router-view />
   </main>
 </template>
 
 <script setup lang="ts">
-import PlotGenerator from "./components/PlotGenerator.vue";
+import NavBar from './components/NavBar.vue'
 </script>
+
 
 <style scoped>
 main {

@@ -41,3 +41,34 @@ def generate_plot(req: PlotRequest):
     img_base64 = base64.b64encode(buf.read()).decode("utf-8")
 
     return {"image": f"data:image/png;base64,{img_base64}"}
+
+
+@app.get("/compare-plot")
+def compare_plot():
+    df = sns.load_dataset("tips")
+
+    # --- Matplotlib stílusú kép ---
+    plt.clf()
+    fig, ax = plt.subplots()
+    ax.bar(df["day"], df["total_bill"], color="gray")
+    ax.set_title("Matplotlib")
+    buf1 = io.BytesIO()
+    fig.savefig(buf1, format="png")
+    buf1.seek(0)
+    matplotlib_img = base64.b64encode(buf1.read()).decode("utf-8")
+
+    # --- Seaborn stílusú kép ---
+    plt.clf()
+    sns.set_theme(style="darkgrid")
+    sns.barplot(data=df, x="day", y="total_bill", palette="deep")
+    plt.title("Seaborn")
+    buf2 = io.BytesIO()
+    plt.savefig(buf2, format="png")
+    buf2.seek(0)
+    seaborn_img = base64.b64encode(buf2.read()).decode("utf-8")
+
+    return {
+        "matplotlib": f"data:image/png;base64,{matplotlib_img}",
+        "seaborn": f"data:image/png;base64,{seaborn_img}"
+    }
+
