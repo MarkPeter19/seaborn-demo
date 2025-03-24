@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import CompareView from "@/pages/CompareView.vue";
 import LandingPage from "@/pages/LandingPage.vue";
-import ChartPlayGround from "@/pages/ChartPlayGround.vue";
+import PlayGround from "@/pages/Playground.vue";
 import RandomChart from "@/pages/RandomChart.vue";
 
 const routes = [
@@ -12,8 +12,8 @@ const routes = [
   },
   {
     path: "/playground",
-    name: "ChartPlayground",
-    component: ChartPlayGround,
+    name: "Playground",
+    component: PlayGround,
   },
   {
     path: "/compare",

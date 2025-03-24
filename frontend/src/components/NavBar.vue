@@ -4,8 +4,8 @@
         <router-link to="/" class="logo">Seaborn Demo</router-link>
         <button class="hamburger" @click="toggleMenu">☰</button>
         <div class="nav-links" :class="{ open: menuOpen }">
-          <router-link to="/playground" class="nav-item" @click="closeMenu">Interaktív</router-link>
-          <router-link to="/compare" class="nav-item" @click="closeMenu">Összehasonlítás</router-link>
+          <router-link to="/playground" class="nav-item" @click="closeMenu">PlayGround</router-link>
+          <router-link to="/compare" class="nav-item" @click="closeMenu">Compare</router-link>
           <router-link to="/random" class="nav-item" @click="closeMenu">Random</router-link>
         </div>
       </div>
@@ -80,7 +80,7 @@
   }
   
   .router-link-exact-active {
-    color: #3b82f6;
+    color: #6da7ee;
     font-weight: bold;
   }
   

@@ -23,8 +23,16 @@ class PlotRequest(BaseModel):
     y: str = None
     palette: str = "deep"
 
+from fastapi import FastAPI, Request, Query
+# ...
+
 @app.post("/generate-plot")
-def generate_plot(req: PlotRequest):
+def generate_plot(req: PlotRequest, theme: str = Query("whitegrid")):
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+
+    sns.set_theme(style=theme)  # 👈 téma alkalmazása
+
     df = sns.load_dataset(req.dataset)
 
     plt.clf()
@@ -32,8 +40,11 @@ def generate_plot(req: PlotRequest):
         sns.barplot(data=df, x=req.x, y=req.y, palette=req.palette)
     elif req.chartType == "violin":
         sns.violinplot(data=df, x=req.x, y=req.y, palette=req.palette)
+    elif req.chartType == "box":
+        sns.boxplot(data=df, x=req.x, y=req.y, palette=req.palette)
     elif req.chartType == "heatmap":
         sns.heatmap(df.corr(), annot=True, cmap=req.palette)
+
 
     buf = io.BytesIO()
     plt.savefig(buf, format="png")
@@ -41,7 +52,6 @@ def generate_plot(req: PlotRequest):
     img_base64 = base64.b64encode(buf.read()).decode("utf-8")
 
     return {"image": f"data:image/png;base64,{img_base64}"}
-
 
 @app.get("/compare-plot")
 def compare_plot():
